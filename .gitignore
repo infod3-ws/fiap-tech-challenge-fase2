@@ -1,0 +1,20 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Credenciais
+*.json
+!package.json
+.env
+credentials/
+
+# Dados grandes locais
+*.parquet
+*.csv
+!docs/**/*.csv
+
+# SO / editor
+.DS_Store
+.vscode/
