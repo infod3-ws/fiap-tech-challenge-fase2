@@ -7,6 +7,7 @@ venv/
 # Credenciais
 *.json
 !package.json
+!docs/*.json
 .env
 credentials/
 

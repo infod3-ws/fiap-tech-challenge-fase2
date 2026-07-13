@@ -135,20 +135,42 @@ Durante a validação de integridade referencial, identificamos 410 registros de
 
 O vídeo mostra o producer publicando 200 eventos simulados no tópico Pub/Sub e o consumer processando em micro-batches de ~5 segundos, gravando na camada Bronze particionada por data de ingestão, sem perda de mensagens.
 
-## 10. Estrutura do Repositório
+## 10. Documentação Técnica Complementar
+
+Além deste README (visão geral e decisões de arquitetura), o projeto inclui:
+
+| Arquivo | Conteúdo |
+|---|---|
+| [`docs/dicionario_dados.md`](docs/dicionario_dados.md) | Significado de cada coluna, incluindo os códigos decodificados via tabela `dicionario` da fonte |
+| [`docs/setup_ambiente.md`](docs/setup_ambiente.md) | Passo a passo de reprodução do ambiente: autenticação GCP, criação de infraestrutura, ordem de execução dos scripts |
+| [`docs/relatorio_qualidade_100.json`](docs/relatorio_qualidade_100.json) | Cópia estática de uma execução real do `data_quality.py`, com score de 100% |
+| [`docs/relatorio_qualidade_erro.json`](docs/relatorio_qualidade_erro.json) | Cópia estática de uma execução real do `data_quality.py`, com erro de integridade referencial |
+| [`requirements.txt`](requirements.txt) | Dependências Python necessárias para rodar os scripts (`pip install -r requirements.txt`) |
+| [`bronze/README.md`](bronze/README.md), [`silver/README.md`](silver/README.md), [`gold/README.md`](gold/README.md) | Documentação de cada camada da arquitetura Medalhão: entidades, paths reais no GCS, scripts responsáveis |
+
+## 11. Estrutura do Repositório
 
 ```
-├── bronze/                    # (estrutura de referência — dados reais no GCS)
+├── bronze/
+│   └── README.md                    # documentação da camada (entidades, paths, schema)
 ├── silver/
+│   └── README.md
 ├── gold/
+│   └── README.md
 ├── quality/
-│   └── data_quality.py
+│   └── data_quality.py              # validações formais + relatório JSON
 ├── scripts/
-│   ├── etl_bronze.py
-│   ├── etl_silver.py
-│   ├── etl_gold.py
-│   ├── streaming_producer.py
-│   └── streaming_consumer.py
+│   ├── etl_bronze.py                # ingestão batch das 7 entidades
+│   ├── etl_silver.py                # tratamento, decodificação, integração, quarentena
+│   ├── etl_gold.py                  # 3 visões analíticas agregadas
+│   ├── streaming_producer.py        # simulação de eventos via Pub/Sub
+│   └── streaming_consumer.py        # consumo em micro-batches
 ├── docs/
+│   ├── dicionario_dados.md          # significado de cada coluna/código
+│   ├── setup_ambiente.md            # reprodução do ambiente do zero
+│   └── relatorio_qualidade_100.json
+│   └── relatorio_qualidade_erro.json
+├── requirements.txt                 # dependências Python
+├── .gitignore
 └── README.md
 ```

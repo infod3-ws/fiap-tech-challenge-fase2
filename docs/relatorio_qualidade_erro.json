@@ -1,0 +1,91 @@
+{
+  "executado_em": "20260713_200239",
+  "score_pct": 88.9,
+  "total_checks": 9,
+  "pass": 8,
+  "fail": 1,
+  "warn": 0,
+  "detalhes": [
+    {
+      "check": "not_null:id_aluno",
+      "camada": "silver",
+      "entidade": "alunos",
+      "status": "PASS",
+      "critico": true,
+      "detalhe": "0 nulos de 3867999 registros",
+      "verificado_em": "20260713_200239"
+    },
+    {
+      "check": "not_null:id_municipio",
+      "camada": "silver",
+      "entidade": "alunos",
+      "status": "PASS",
+      "critico": true,
+      "detalhe": "0 nulos de 3867999 registros",
+      "verificado_em": "20260713_200239"
+    },
+    {
+      "check": "not_null:ano",
+      "camada": "silver",
+      "entidade": "alunos",
+      "status": "PASS",
+      "critico": true,
+      "detalhe": "0 nulos de 3867999 registros",
+      "verificado_em": "20260713_200239"
+    },
+    {
+      "check": "not_null:id_municipio",
+      "camada": "silver",
+      "entidade": "municipio",
+      "status": "PASS",
+      "critico": true,
+      "detalhe": "0 nulos de 23995 registros",
+      "verificado_em": "20260713_200239"
+    },
+    {
+      "check": "not_null:ano",
+      "camada": "silver",
+      "entidade": "municipio",
+      "status": "PASS",
+      "critico": true,
+      "detalhe": "0 nulos de 23995 registros",
+      "verificado_em": "20260713_200239"
+    },
+    {
+      "check": "unique:id_aluno+ano",
+      "camada": "silver",
+      "entidade": "alunos",
+      "status": "PASS",
+      "critico": true,
+      "detalhe": "0 duplicatas encontradas (chave=['id_aluno', 'ano'])",
+      "verificado_em": "20260713_200239"
+    },
+    {
+      "check": "unique:id_municipio+ano+rede",
+      "camada": "silver",
+      "entidade": "municipio",
+      "status": "PASS",
+      "critico": true,
+      "detalhe": "0 duplicatas encontradas (chave=['id_municipio', 'ano', 'rede'])",
+      "verificado_em": "20260713_200239"
+    },
+    {
+      "check": "referential_integrity:id_municipio",
+      "camada": "silver",
+      "entidade": "alunos_para_municipio",
+      "status": "FAIL",
+      "critico": true,
+      "detalhe": "1 valores de 'id_municipio' sem correspondencia em 'id_municipio'",
+      "verificado_em": "20260713_200239"
+    },
+    {
+      "check": "consistencia_total_alunos_silver_vs_gold",
+      "camada": "gold",
+      "entidade": "indicador_por_municipio",
+      "status": "PASS",
+      "critico": true,
+      "detalhe": "silver=3867999 | gold=3867999 | diferenca=0",
+      "verificado_em": "20260713_200239"
+    }
+  ]
+}
