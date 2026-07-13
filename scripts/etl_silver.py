@@ -102,6 +102,24 @@ def transformar_meta_municipio(df):
     return df
 
 # ============================================================
+# QUARENTENA — Registros em Quarentena por Referência
+# ============================================================
+def separar_quarentena_referencial(df_alunos, df_municipio):
+    """Separa alunos cujo id_municipio não existe na tabela de referência."""
+    chaves_validas = set(df_municipio["id_municipio"].astype(str))
+    mask_valido = df_alunos["id_municipio"].astype(str).isin(chaves_validas)
+
+    df_quarentena = df_alunos[~mask_valido].copy()
+    df_quarentena["_quarentena_motivo"] = "id_municipio sem correspondencia na tabela municipio"
+
+    df_pass = df_alunos[mask_valido].copy()
+
+    log.info(f"[SILVER] Quarentena referencial: {len(df_quarentena)} registros isolados")
+    log.info(f"[SILVER] Pass: {len(df_pass)} registros seguem para integração")
+
+    return df_pass, df_quarentena
+
+# ============================================================
 # INTEGRAÇÃO — Joins
 # ============================================================
 
@@ -149,8 +167,14 @@ def main():
     dicionario     = ler_bronze("dicionario")
     df_alunos      = transformar_alunos(ler_bronze("alunos"), dicionario)
     df_municipio   = transformar_municipio(ler_bronze("municipio"), dicionario)
-    df_meta_mun    = transformar_meta_municipio(ler_bronze("meta_alfabetizacao_municipio"))
 
+    df_alunos, df_quarentena_alunos = separar_quarentena_referencial(df_alunos, df_municipio)
+
+    if len(df_quarentena_alunos) > 0:
+        salvar_silver(df_quarentena_alunos.assign(ano=df_quarentena_alunos["ano"]), "alunos_quarentena")
+
+    df_meta_mun    = transformar_meta_municipio(ler_bronze("meta_alfabetizacao_municipio"))
+    
     salvar_silver(df_alunos, "alunos")
     salvar_silver(df_municipio, "municipio")
     salvar_silver(df_meta_mun, "meta_alfabetizacao_municipio")
