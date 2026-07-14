@@ -174,3 +174,9 @@ Além deste README (visão geral e decisões de arquitetura), o projeto inclui:
 ├── .gitignore
 └── README.md
 ```
+
+## 12. Apresentação Executiva da Plataforma
+
+[Assista a apresentação executiva da plataforma](https://github.com/infod3-ws/fiap-tech-challenge-fase2/releases/download/v0.1-fiap-tc2-apresentacao/FIAP_POSTECH_TC2_Weric_Silva_Apresentacao.mp4)
+
+O vídeo de 5 minutos apresenta a plataforma em formato executivo exibindo desde o problema inicial, a solução adotada, a arquitetura empregada até as conclusões obtidas.
